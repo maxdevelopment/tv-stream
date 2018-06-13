@@ -7,14 +7,19 @@ import (
 	"time"
 	"log"
 	"io/ioutil"
+	"github.com/maxdevelopment/tv-stream/ws"
 )
 
 func main() {
 	config.ReadConfig()
 
+	hub := ws.H
+	go hub.Run()
+
 	router := mux.NewRouter().StrictSlash(true)
 	router.HandleFunc("/", GetIndex).Methods("GET")
 	router.PathPrefix("/js/").Handler(http.StripPrefix("/js/", http.FileServer(http.Dir("web/dist/"))))
+	router.HandleFunc("/stream/{id}", ws.Handler).Methods("GET")
 
 	srv := &http.Server{
 		Handler:      router,
