@@ -18,8 +18,10 @@ func main() {
 
 	router := mux.NewRouter().StrictSlash(true)
 	router.HandleFunc("/", GetIndex).Methods("GET")
+	router.HandleFunc("/stream", GetIndex).Methods("GET")
 	router.PathPrefix("/js/").Handler(http.StripPrefix("/js/", http.FileServer(http.Dir("web/dist/"))))
 	router.HandleFunc("/stream/{id}", ws.Handler).Methods("GET")
+	router.NotFoundHandler = http.HandlerFunc(GetIndex)
 
 	srv := &http.Server{
 		Handler:      router,
