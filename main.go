@@ -8,6 +8,7 @@ import (
 	"log"
 	"io/ioutil"
 	"github.com/maxdevelopment/tv-stream/ws"
+	"github.com/maxdevelopment/tv-stream/api"
 )
 
 func main() {
@@ -20,7 +21,10 @@ func main() {
 	router.HandleFunc("/", GetIndex).Methods("GET")
 	router.HandleFunc("/stream", GetIndex).Methods("GET")
 	router.PathPrefix("/js/").Handler(http.StripPrefix("/js/", http.FileServer(http.Dir("web/dist/"))))
+
+	router.HandleFunc("/api/start-stream", api.Handler).Methods("GET")
 	router.HandleFunc("/stream/{id}", ws.Handler).Methods("GET")
+
 	router.NotFoundHandler = http.HandlerFunc(GetIndex)
 
 	srv := &http.Server{
