@@ -5,11 +5,13 @@ export default {
   state: {
     id: null,
     createdAt: null,
-    ws: null
+    ws: null,
+    stream: null
   },
 
   getters: {
-    stream: state => state
+    stream: state => state,
+    getStream: state => state.stream
   },
 
   mutations: {
@@ -19,6 +21,9 @@ export default {
     },
     SET_WS(state, data) {
       state.ws = data.ws
+    },
+    SET_STREAM(state, data) {
+      state.stream = data
     }
   },
 
@@ -33,6 +38,9 @@ export default {
     },
     setWs({commit}, data) {
       commit('SET_WS', data)
+    },
+    setStream({commit}, stream) {
+      commit('SET_STREAM', stream)
     }
   }
 }

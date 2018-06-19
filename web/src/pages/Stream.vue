@@ -1,15 +1,20 @@
 <template>
   <div>
     Stream
+    <own-stream></own-stream>
   </div>
 </template>
 
 <script>
+  import OwnStream from '~/components/OwnStream'
   import Routes from '~/static/routes'
   import router from '~/router'
 
   export default {
     name: "Stream",
+    components: {
+      OwnStream
+    },
     beforeMount() {
       if (!this.stream.id) {
         router.push({path: `/`})
@@ -19,6 +24,20 @@
     },
     mounted() {
       console.log(this.stream.ws)
+      this.startStream()
+    },
+    methods: {
+      startStream() {
+
+        if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+          navigator.mediaDevices.getUserMedia({video: true, audio: true})
+            .then(stream => {
+
+              this.$store.dispatch('setStream', stream)
+
+            }).catch(this.logError);
+        }
+      },
     },
     computed: {
       stream() {
