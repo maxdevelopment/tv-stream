@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"log"
 	"github.com/gorilla/mux"
+	"fmt"
 )
 
 const (
@@ -64,9 +65,11 @@ func (c *Client) listenHub() {
 
 func (c *Client) isConnected() {
 	for {
-		_, _, err := c.Conn.ReadMessage()
+		_, msg, err := c.Conn.ReadMessage()
 		if err != nil {
 			return
 		}
+		fmt.Println(string(msg))
+		fmt.Println(msg)
 	}
 }

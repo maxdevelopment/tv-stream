@@ -33,11 +33,12 @@
           navigator.mediaDevices.getUserMedia({video: true, audio: true})
             .then(stream => {
 
-              this.$store.dispatch('setStream', stream)
+
+              this.$store.dispatch('setStreamMedia', stream)
 
             }).catch(this.logError);
         }
-      },
+      }
     },
     computed: {
       stream() {

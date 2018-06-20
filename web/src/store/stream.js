@@ -6,7 +6,8 @@ export default {
     id: null,
     createdAt: null,
     ws: null,
-    stream: null
+    stream: null,
+    mediaRecorder: null
   },
 
   getters: {
@@ -22,8 +23,14 @@ export default {
     SET_WS(state, data) {
       state.ws = data.ws
     },
+    BROADCAST_STREAM_DATA(state, data) {
+      state.ws.send(data)
+    },
     SET_STREAM(state, data) {
       state.stream = data
+    },
+    SET_MEDIA_RECORDER(state, data) {
+      state.mediaRecorder = data
     }
   },
 
@@ -39,8 +46,33 @@ export default {
     setWs({commit}, data) {
       commit('SET_WS', data)
     },
-    setStream({commit}, stream) {
+    setStreamMedia({commit}, stream) {
+      const mediaRecorder = new MediaRecorder(stream);
+      mediaRecorder.addEventListener('dataavailable', function (event) {
+        console.log('dataavailable')
+        commit('BROADCAST_STREAM_DATA', event.data)
+      })
+      mediaRecorder.addEventListener('start', function (event) {
+        console.log('start')
+      })
+      mediaRecorder.addEventListener('stop', function (event) {
+        console.log('stop')
+      })
+      mediaRecorder.addEventListener('pause', function (event) {
+        console.log('pause')
+      })
+      mediaRecorder.addEventListener('resume', function (event) {
+        console.log('resume')
+      })
+      mediaRecorder.addEventListener('error', function (event) {
+        console.log('error')
+      })
+      mediaRecorder.start(500);
+
+
+
       commit('SET_STREAM', stream)
+      commit('SET_MEDIA_RECORDER', mediaRecorder)
     }
   }
 }
