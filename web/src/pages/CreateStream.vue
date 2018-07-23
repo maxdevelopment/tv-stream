@@ -5,6 +5,9 @@
       <button type="button" @click="startStream()">
         Create Stream
       </button>
+      <button type="button" @click="connectTv()">
+        Connect TV
+      </button>
     </div>
   </div>
 </template>
@@ -15,6 +18,9 @@
     methods: {
       startStream() {
         this.$store.dispatch('startStream')
+      },
+      connectTv() {
+        this.$store.dispatch('connectTv')
       }
     }
   }

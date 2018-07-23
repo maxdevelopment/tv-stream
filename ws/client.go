@@ -69,7 +69,7 @@ func (c *Client) isConnected() {
 		if err != nil {
 			return
 		}
-		fmt.Println(string(msg))
+		//fmt.Println(string(msg))
 		fmt.Println(msg)
 	}
 }

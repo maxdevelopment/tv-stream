@@ -35,6 +35,9 @@ export default {
   },
 
   actions: {
+    connectTv({commit}) {
+      router.push({path: `/tv`})
+    },
     startStream({commit}) {
       Routes.startStream().get().then(response => {
         commit('CREATE_STREAM', response.body)
