@@ -50,7 +50,15 @@ export default {
       commit('SET_WS', data)
     },
     setStreamMedia({commit}, stream) {
-      const mediaRecorder = new MediaRecorder(stream);
+
+      const options = {
+        audioBitsPerSecond : 128000,
+        videoBitsPerSecond : 2500000,
+        mimeType : 'video/webm'
+      }
+
+      const mediaRecorder = new MediaRecorder(stream, options);
+      console.log(mediaRecorder.mimeType)
       mediaRecorder.addEventListener('dataavailable', function (event) {
         console.log('dataavailable')
         commit('BROADCAST_STREAM_DATA', event.data)

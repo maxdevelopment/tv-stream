@@ -69,7 +69,11 @@ func (c *Client) isConnected() {
 		if err != nil {
 			return
 		}
+		if tv, ok := H.Clients["tv"]; ok {
+			fmt.Println("TV presents: ", tv)
+			tv.Conn.WriteMessage(websocket.BinaryMessage, msg)
+		}
 		//fmt.Println(string(msg))
-		fmt.Println(msg)
+		//fmt.Println(msg)
 	}
 }
